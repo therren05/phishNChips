@@ -48,4 +48,10 @@ public class AdminController {
     public List<ScoreTO> getData() {
         return scoreSO.getData();
     }
+
+    @GetMapping("/viewWeeklyLogs")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<ScoreTO> getDailyData() {
+        return scoreSO.getWeeklyData();
+    }
 } 
