@@ -49,9 +49,9 @@ public class AdminController {
         return scoreSO.getData();
     }
 
-    @GetMapping("/viewDailyLogs")
+    @GetMapping("/viewWeeklyLogs")
     @CrossOrigin(origins = "http://localhost:3000")
     public List<ScoreTO> getDailyData() {
-        return scoreSO.getDailyData();
+        return scoreSO.getWeeklyData();
     }
 } 

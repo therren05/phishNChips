@@ -27,8 +27,8 @@ public class ScoreSO {
         scoreDAO.insertScore(data);
     }
 
-    public List<ScoreTO> getDailyData() {
-        return scoreDAO.getDailyData();
+    public List<ScoreTO> getWeeklyData() {
+        return scoreDAO.getWeeklyData();
     }
 
 }

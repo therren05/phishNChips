@@ -44,10 +44,11 @@ public class ScoreDAO {
         return template.query(sql, mapper);
     }
 
-    public List<ScoreTO> getDailyData() {
+    public List<ScoreTO> getWeeklyData() {
         //sql to get all the score logs
         String sql = "select * from score_logs" +
-         " WHERE created_at::date = CURRENT_DATE" +
+         " WHERE created_at >= date_trunc('week', current_date)" +
+         " AND created_at < date_trunc('week', current_date) + interval '1 week'" +
          " ORDER BY score DESC";
 
         RowMapper<ScoreTO> mapper = new RowMapper<ScoreTO>() {
