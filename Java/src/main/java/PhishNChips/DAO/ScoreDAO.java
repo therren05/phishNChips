@@ -7,8 +7,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class ScoreDAO {
     }
 
     public List<ScoreTO> getData() {
-        //sql to get all the data logs
+        //sql to get all the score logs
         String sql = "select * from score_logs ORDER BY score DESC";
 
         RowMapper<ScoreTO> mapper = new RowMapper<ScoreTO>() {
@@ -48,7 +46,7 @@ public class ScoreDAO {
 
 
     public List<ScoreTO> getUserScore(String username) {
-        //sql to get all datas from the signed in user
+        //sql to get all scores from the signed in user
         String sql = "select * from score_logs WHERE username = ? ORDER BY score DESC";
 
         RowMapper<ScoreTO> mapper = new RowMapper<ScoreTO>() {
