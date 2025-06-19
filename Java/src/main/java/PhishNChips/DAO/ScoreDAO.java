@@ -29,7 +29,7 @@ public class ScoreDAO {
 
     public List<ScoreTO> getData() {
         //sql to get all the data logs
-        String sql = "select * from score_logs";
+        String sql = "select * from score_logs ORDER BY score DESC";
 
         RowMapper<ScoreTO> mapper = new RowMapper<ScoreTO>() {
             @Override
@@ -49,7 +49,7 @@ public class ScoreDAO {
 
     public List<ScoreTO> getUserScore(String username) {
         //sql to get all datas from the signed in user
-        String sql = "select * from score_logs WHERE username = ?";
+        String sql = "select * from score_logs WHERE username = ? ORDER BY score DESC";
 
         RowMapper<ScoreTO> mapper = new RowMapper<ScoreTO>() {
             @Override
@@ -71,11 +71,6 @@ public class ScoreDAO {
         // SQL to insert a new log entry into the database
         String sql = "INSERT INTO score_logs (arcadeName, username, score) VALUES (?, ?, ?)";
     
-        //String raw = data.getTimestamp(); // e.g. "2025-06-19T13:45:00"
-        //LocalDateTime ldt = LocalDateTime.parse(raw); // ISO-8601 format
-        //Timestamp timestamp = Timestamp.valueOf(ldt);
-        //Timestamp timestamp = Timestamp.valueOf(data.getTimestamp());
-
         // Execute the update query
         template.update(sql, data.getArcadeName(), data.getUsername(), data.getScore());
     }
