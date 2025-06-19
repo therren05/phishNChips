@@ -1,0 +1,252 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  minWidth: '100vw';
+  background-color: #ED1D24;
+  color: white;
+  font-family: sans-serif;
+  position: relative; /* required for absolute children */
+  padding-top: 100px;  /* space for the curve */
+  overflow-x: hidden;
+}
+
+.title {
+  
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+.sub-title {
+  
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.intro-image {
+  width: 200px; /* or use max-width: 100% for responsiveness */
+  margin: 20px auto;
+  display: block;
+}
+
+.text {
+  font-size: 1.25rem;
+  max-width: 600px;
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.white-box {
+  background-color: white;
+  color: black; /* ensure text is visible */
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 4rem auto; /* center horizontally, add top/bottom space */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* optional shadow for depth */
+  text-align: left;
+}
+
+.white-box h2 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.75rem;
+}
+
+
+
+.buttonSection {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem;
+  /* background-color: #fee2e2;*/
+}
+
+.button {
+  background-color: #ED1D24;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  justify-content: center; /* 👈 center the button horizontally */
+
+}
+
+.button:hover {
+  background-color: #fca5a5;
+}
+
+.page-wrapper {
+  position: relative;
+  min-height: 200vh; /* long enough to scroll */
+  /* background-color: #ED1D24;
+  color: white; */
+  font-family: sans-serif;
+  overflow-x: hidden;
+}
+
+.content {
+  position: relative;
+  padding: 100px 20px;
+  text-align: center;
+  flex: 1;
+
+}
+
+/* .button-scroll-section {
+  position: relative;
+  height: 100vh;
+  z-index: 10;
+} */
+
+/* .button-container {
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  background-color: #ED1D24;
+  padding: 2rem;
+} */
+
+.introSection {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -60px; /* or -20px, tweak as needed */
+
+  text-align: center;
+  position: relative;
+}
+
+/* .scrollSection {
+  height: 100vh;
+  position: relative;
+  z-index: 10;
+} */
+
+.stickyButtonWrapper {
+  
+  justify-content: center;
+  
+}
+
+.footer {
+  width: 100%;                /* Full width */
+  background-color: white;  /* Soft red */
+  padding: 2.5rem 1rem;       /* Padding for breathing room */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+}
+
+
+
+.scroll-toggle-button.active:hover {
+  background-color: #c8161c;
+}
+.scroll-toggle-button:hover {
+  background-color: #fee2e2;
+}
+
+.scroll-toggle-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: white;
+  color: #ED1D24;
+  border: none;
+  border-radius: 50%;
+  padding: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  z-index: 1000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.scroll-toggle-button.active {
+  background-color: #ED1D24;
+  color: white;
+}
+
+.white-footer-transition {
+  background-color: white;
+  height: 100px;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  margin-top: -50px;
+  z-index: 1;
+  position: relative;
+}
+
+.svg-curve {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.svg-curve svg {
+  display: block;
+  width: 100%;
+  height: 100px;
+  overflow-x: 'hidden';
+}
+
+.svg-curve.top {
+  transform: rotate(180deg);
+  position: absolute;
+  top: 40px; /* directly below the 40px white padding */
+  left: 0;
+  width: 100%;
+  height: 100px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.white-top-padding {
+  background-color: white;
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.input-wrapper {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.input-box {
+  color: black;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  width: 80%;
+  max-width: 300px;
+  font-size: 16px;
+  border: 2px solid black; /* 👈 permanent white border */
+
+
+}
+
+.error-text {
+  color: red;
+  margin-top: 8px;
+  font-weight: bold;
+  text-align: center;
+
+}
