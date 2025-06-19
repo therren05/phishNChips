@@ -44,6 +44,26 @@ public class ScoreDAO {
         return template.query(sql, mapper);
     }
 
+    public List<ScoreTO> getDailyData() {
+        //sql to get all the score logs
+        String sql = "select * from score_logs" +
+         " WHERE created_at::date = CURRENT_DATE" +
+         " ORDER BY score DESC";
+
+        RowMapper<ScoreTO> mapper = new RowMapper<ScoreTO>() {
+            @Override
+            public ScoreTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+                //sets the values of the data based on the values in each column in the database
+                ScoreTO score = new ScoreTO();
+                score.setArcadeName(rs.getString("arcadeName"));
+                score.setScore(rs.getInt("score"));
+                score.setUsername(rs.getString("username"));
+
+                return score;
+            }
+        };
+        return template.query(sql, mapper);
+    }
 
     public List<ScoreTO> getUserScore(String username) {
         //sql to get all scores from the signed in user
@@ -72,6 +92,7 @@ public class ScoreDAO {
         // Execute the update query
         template.update(sql, data.getArcadeName(), data.getUsername(), data.getScore());
     }
+    
     
 
 }
