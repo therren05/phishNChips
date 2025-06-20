@@ -10,6 +10,7 @@ import fs from 'fs';
 const app = express();
 const port = 1922;
 app.use(cors());
+var randomNumber = 0;
  
 
 
@@ -48,19 +49,20 @@ app.get('/email', (req: Request, res: Response) => {
     if (emails.length === 0) {
          res.status(404).json({ message: 'No emails found' });
     }else{
-         res.status(200).json(emails[Math.floor(Math.random() * emails.length)]);
+        randomNumber = Math.floor(Math.random() * emails.length);
+         res.status(200).json(emails[randomNumber]);
     }
 });
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    //console.log(`Server running at http://localhost:${port}`);
 });
 async function readAllCsvEmails(): Promise<emailFormat[]> {
   const csvFiles = [
     // './CEAS_08.csv',
     './Nazario.csv',
-    './Nigerian_Fraud.csv',
-    './SpamAssassin.csv'
+    //'./Nigerian_Fraud.csv',
+    './SpamAssasin.csv'
   ];
     for (const file of csvFiles) {
         if (fs.existsSync(file)) {

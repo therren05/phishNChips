@@ -1,8 +1,9 @@
 import React from "react";
 
-function EmailItem({ sender, subject, preview, time, onClick  }) {
+function EmailItem({ sender, subject, preview, time, onClick, currentEmail, isDisabled}) {
   return (
-    <button onClick={onClick} className="w-full bg-blue-50 border-r border-blue-200 overflow-y-auto">
+    <button onClick={onClick} disabled={isDisabled} className={`w-full border-r border-blue-200 overflow-y-auto ${
+    subject === currentEmail.subject ? "bg-blue-100" : "bg-blue-50"}`}>
         {/* Mock Email */}
         <div className="w-full border-b border-blue-200 px-2 py-3 cursor-pointer hover:bg-blue-100 text-left">
             <div className="flex justify-between items-center">

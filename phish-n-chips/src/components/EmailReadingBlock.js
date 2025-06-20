@@ -10,12 +10,14 @@ function EmailReadingPane({
   senderImageUrl, 
   recipient, 
   body, 
+  checkFunction,
+  isPhishing,
   attachment // { name: string, size: string } or null/undefined
 }) {
   return (
     <div className="flex flex-col w-[calc(59vw)] h-[calc(85vh)] p-6 overflow-y-auto bg-white text-black">
       {/* Subject */}
-      <h1 className="text-[calc(120%)] font-bold mb-6">{subject}</h1>
+      <h1 className="text-[calc(120%)] font-bold mb-6">{subject ? subject : "NO-SUBJECT"}</h1>
 
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -33,12 +35,13 @@ function EmailReadingPane({
           {/* Sender & Recipient */}
           <div>
             <div className="text-lg font-semibold">{senderName ? senderName : "NO-SENDER-CONTACT"}</div>
-            <div className="text-sm text-gray-600">{recipient}</div>
+            <div className="text-sm text-gray-600">{recipient ? recipient : "you"}</div>
           </div>
         </div>
 
         <div className="flex mt-[calc(-25px)] border border-gray-300 rounded overflow-hidden ">
-          <button title="Trash" className="step5 px-2 py-1 text-red-500 text-[calc(120%)] bg-white text-black border-r border-gray-300 hover:bg-blue-100 rounded-l">
+          <button title="Trash" className="step5 px-2 py-1 text-red-500 text-[calc(120%)] bg-white text-black border-r border-gray-300 hover:bg-blue-100 rounded-l"
+            onClick={() => checkFunction(!isPhishing, subject)}>
             <FaTrashAlt/>
           </button>
           <button title="Reply" className="px-1 py-1 text-purple-800 text-[calc(150%)] bg-white text-black border-r border-gray-300 hover:bg-blue-100">
@@ -47,7 +50,8 @@ function EmailReadingPane({
           <button title="Forward" className="px-1 py-1 text-blue-800 text-[calc(150%)] bg-white text-black border-r border-gray-300 hover:bg-blue-100">
             <IoIosArrowRoundForward/>
           </button>
-          <button title="Report" className="step4 px-2 py-1 text-red-800 text-[calc(120%)] bg-white text-black border-gray-300 hover:bg-blue-100 rounded-r">
+          <button title="Report" className="step4 px-2 py-1 text-red-800 text-[calc(120%)] bg-white text-black border-gray-300 hover:bg-blue-100 rounded-r"
+            onClick={() => checkFunction(isPhishing, subject)}>
             <FaFish/>
           </button>
         </div>

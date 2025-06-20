@@ -29,10 +29,14 @@ function GamePage() {
   const [emails, setEmails] = useState([]);
   const [currentEmail, setCurrentEmail] = useState(null);
   const addEmail = (newEmail) => {setEmails((prevEmails) => [...prevEmails, newEmail]);};
+  const removeEmail = (emailToRemove) => {setEmails((prevEmails) => prevEmails.filter((email) => email !== emailToRemove));};
+  const removeEmailById = (subject) => {setEmails((prevEmails) => prevEmails.filter((email) => email.subject !== subject));};
   const [page, setPage] = useState(0);
   const visibleData = leaderboardData.slice(page * 20, (page + 1) * 20);
   const [selectedBoard, setSelectedBoard] = useState("all");
   const location = useLocation();
+  const [score, setScore] = useState(0);
+  const [disabled, setDisabled] = useState(false);
   const userInput = location.state?.userInput || ''; //user inputed alias variable
   //modal crap
   const [modalOpen, setModalOpen] = useState(false);
@@ -49,7 +53,7 @@ function GamePage() {
     try {
     const payload = {
       arcadeName: nickname,
-      score: 25,
+      score: score,
       username: userInput,
     };
 
@@ -82,21 +86,25 @@ function GamePage() {
 
   useEffect(() => {
     if(!begin) return;
-    if (timeLeft === 0) return;
-
+    if (timeLeft <= 0){
+      setDisabled(true);
+      setCurrentEmail(null);
+      return;
+    }
     const interval = setInterval(() => {
       setTimeLeft(prev => prev - 1);
       //rng for grabbing email
        if (Math.random() < 0.2) 
         fetchEmails();
+       if(emails.length === 0)
+        fetchEmails();
       
     }, 1000);
-
     return () => clearInterval(interval);
   }, [begin, timeLeft]);
 
   useEffect(() => {
-    if (timeLeft === 0) {
+    if (timeLeft <= 0) {
       openModal();
     }
   }, [timeLeft]);
@@ -160,7 +168,12 @@ function GamePage() {
 
   // On correct answer
   const onCorrect = () => {
-    toast.success("Correct", {
+    const timeAdd = Math.floor(300 / ((score + 30) + (timeLeft + 1)/2))
+    //add to timer
+    setTimeLeft(timeLeft + timeAdd);
+    //add to score
+    setScore(score+1);
+    toast.success("Correct! +" + timeAdd + " seconds", {
       duration: 3000,
       position: "top-center",
       style: {
@@ -172,7 +185,9 @@ function GamePage() {
     
   //on wrong answer
   const onWrong = () => {
-    toast.failure("Error", {
+    //subtract timer
+    setTimeLeft(timeLeft-15);
+    toast.error("Wrong... -15 seconds", {
       duration: 3000,
       position: "top-center",
       style: {
@@ -182,10 +197,20 @@ function GamePage() {
       },
     });}
 
+  const checkAnswer = (answer, subject) => {
+    if (answer) {
+      onCorrect();
+    } else {
+      onWrong();
+    }
+    removeEmailById(subject);
+    setCurrentEmail(null);
+  }
+
   return (
     <div className="font-semibold bg-[#ED1D24] min-h-screen text-white relative pt-6">
       {/* Modal*/}
-        <Modal isOpen={modalOpen} onClose={closeModal} />
+        <Modal isOpen={modalOpen} onClose={closeModal} score={score} />
       {/* Toast */}
         <Toaster />
 
@@ -270,14 +295,15 @@ function GamePage() {
                 <div className="w-[calc(20vw)] h-[calc(85vh)] bg-blue-50 border-r border-blue-200 overflow-y-auto">
                   {emails.map((email, index) => (
                     <EmailBlock
+                      isDisabled = {disabled}
                       key={index}
                       sender={email.sender}
                       subject={email.subject}
                       preview={email.body}
                       time={email.timestamp}
+                      currentEmail={currentEmail ? currentEmail : {}}
                       onClick={() => {
                         setCurrentEmail(email);
-                        console.log("Clicked email:", email);
                       }}
                     />
                   ))}
@@ -287,11 +313,14 @@ function GamePage() {
                 <section className="step3 flex-grow bg-blue-50 relative">
                 {currentEmail &&
                 (<EmailReadingBlock 
+                    email={(currentEmail)}
                     subject={currentEmail.subject}
                     senderName={currentEmail.senderName}
-                    senderImageUrl={`https://robohash.org/${Math.floor(Math.random() * 1000)}`} // Random number 0–999
+                    senderImageUrl={`https://robohash.org/${encodeURIComponent(currentEmail.sender)}`}
                     recipient={currentEmail.recipient}
-                    attachment={{ name: "Q2_Plasdfs rtretertert ert rre ern.pdf", size: "2.4 MB" }} // pass null if no attachment
+                    attachment={{}} // pass null if no attachment
+                    checkFunction={checkAnswer}
+                    isPhishing={currentEmail.isPhishing}
                     body= {currentEmail.body}
                 />)}
                 </section>
@@ -300,7 +329,6 @@ function GamePage() {
             {/* Footer Bar */}
             <div className="h-6 bg-blue-100 border-t border-blue-200"></div>
         </div>
-
     </div>
 
         {/* Curve */}

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 
-function Modal({ isOpen, onClose }) {
+function Modal({ isOpen, onClose, score}) {
   const [error, setError] = useState('');
   const [userInput, setUserInput] = useState('');
   if (!isOpen) return null;
@@ -36,7 +36,8 @@ function Modal({ isOpen, onClose }) {
           </button>
 
           {/* Title */}
-          <h2 className="text-2xl font-bold mb-4 text-black">Game Over :(</h2>
+          <h2 className="text-2xl font-bold mb-4 text-black text-center">Game Over :(</h2>
+          <h2 className="text-2xl font-bold mb-4 text-black text-center">You got {score} points!</h2>
 
           {/* Body */}
           <p className="mb-6 text-black text-center">
