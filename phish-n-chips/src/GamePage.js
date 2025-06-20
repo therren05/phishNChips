@@ -142,6 +142,7 @@ function GamePage() {
     try {
       const endpoint = selectedBoard === "all" ? "http://localhost:8080/admin/viewLogs" : "http://localhost:8080/admin/viewWeeklyLogs"
       const response = await axios.get(endpoint, {
+
         auth: {
           username: "admin",
           password: "pass123!",
@@ -212,6 +213,7 @@ function GamePage() {
     removeEmailById(subject);
     setCurrentEmail(null);
   }
+
 
   return (
     <div className="font-semibold bg-[#ED1D24] min-h-screen text-white relative pt-6">
@@ -350,10 +352,12 @@ function GamePage() {
         <div className="w-3/4 mx-auto mb-6">
             <h2 className="text-4xl font-bold text-left mb-6 ">Leaderboard</h2>
         </div>
+
         <div className="w-3/4 mx-auto mb-4 flex">
           <div>
             <button 
               onClick={() => {setSelectedBoard("all")}}
+
               style={{
                 backgroundColor: selectedBoard === "all" ? "#cccccc" : "#ffffff",
                 color: "#000",
@@ -368,6 +372,7 @@ function GamePage() {
 
             <button
               onClick={() => {setSelectedBoard("weekly")}}
+
               style={{
                 backgroundColor: selectedBoard === "weekly" ? "#cccccc" : "#ffffff",
                 color: "#000",
@@ -425,6 +430,14 @@ function GamePage() {
     </tr>
   ))}
 </tbody>
+              {visibleData.map((entry) => (
+                <tr key={entry.rank} className="even:bg-red-50 hover:bg-red-100 cursor-pointer">
+                  <td className="py-2 px-4 border-t border-red-100">{entry.rank}</td>
+                  <td className="py-2 px-4 border-t border-red-100">{entry.username}</td>
+                  <td className="py-2 px-4 border-t border-red-100">{entry.score}</td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
 
