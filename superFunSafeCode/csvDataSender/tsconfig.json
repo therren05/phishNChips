@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                    // or whichever ECMAScript version you need
+    "module": "node16",                    // compile to native ESM
+    "moduleResolution": "node16",          // use Node‑style resolution
+    "outDir": "dist",                      // where compiled .js files go
+    "rootDir": ".",                        // where your .ts files live
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "allowJs": false,
+    "resolveJsonModule": true
+  },
+  "include": ["**/*.ts"],                  // compile all .ts in your project
+  "exclude": ["node_modules", "dist"]
+}
