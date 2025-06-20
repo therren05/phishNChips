@@ -47,7 +47,15 @@ function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Welcome to Phish-n-Chips
+          Welcome to P.I.K.E.
+        </motion.h1>
+        <motion.h1 
+          className="sub-title"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          (Phishing Interactive Knowledge Evaluator)
         </motion.h1>
         <motion.img
           src={phish}

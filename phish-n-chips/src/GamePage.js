@@ -28,7 +28,7 @@ function GamePage() {
   const [cookies, setCookie, removeCookie] = useCookies(["tourCompleted"]);
   const [leaderboardData, setLeaderBoardData] = useState([]);
   const [emails, setEmails] = useState([]);
-  const [currentEmail, setCurrentEmail] = useState(null);
+  const [currentEmail, setCurrentEmail] = useState(emails[0]);
   const addEmail = (newEmail) => {setEmails((prevEmails) => [...prevEmails, newEmail]);};
   const removeEmail = (emailToRemove) => {setEmails((prevEmails) => prevEmails.filter((email) => email !== emailToRemove));};
   const removeEmailById = (subject) => {setEmails((prevEmails) => prevEmails.filter((email) => email.subject !== subject));};
@@ -121,13 +121,16 @@ function GamePage() {
     window.scrollTo({top: 0, behavior: "auto"});
     if(!cookies.tourCompleted){
        startTour();
-       setTimeout(() => {
-        setCurrentEmail(emails[0]);
-      }, 1000);
     }
     else
        setBegin(true);
   }, []);
+
+  useEffect(() => {
+  if (emails.length > 0 && currentEmail == null && !disabled) {
+    setCurrentEmail(emails[0]);
+  }
+}, [emails]);
   
   const sidebarItems = [
     { label: "Inbox", count: emails.length },
