@@ -154,7 +154,7 @@ function HomePage() {
             </div>
 
             <Button
-              className="button ml-auto mr-auto flex"
+              className="button ml-auto mr-auto flex mb-[calc(50%)]"
               onClick={() => {
                 if (!userInput.trim()) {
                   setError("Please enter your alias.");

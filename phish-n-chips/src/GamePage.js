@@ -9,6 +9,7 @@ import './GamePage.css';
 import EmailBlock from "./components/EmailBlock.js";
 import Modal from "./components/Modal.js";
 import { startTour } from "./components/TourSteps.js";
+import showCustomToast from "./components/NotificationToast.js";
 import EmailReadingBlock from "./components/EmailReadingBlock.js";
 import { useEffect } from "react";
 import { Tooltip } from 'react-tooltip';
@@ -118,14 +119,18 @@ function GamePage() {
     fetchLeaderboard();
     fetchEmails();
     window.scrollTo({top: 0, behavior: "auto"});
-    if(!cookies.tourCompleted)
+    if(!cookies.tourCompleted){
        startTour();
+       setTimeout(() => {
+        setCurrentEmail(emails[0]);
+      }, 1000);
+    }
     else
        setBegin(true);
   }, []);
   
   const sidebarItems = [
-    { label: "Inbox", count: 427 },
+    { label: "Inbox", count: emails.length },
     { label: "Sent", count: 0 },
     { label: "Drafts", count: 26 },
     { label: "Spam", count: 3 },
@@ -160,6 +165,7 @@ function GamePage() {
         },
       });
       addEmail(response.data);
+      showCustomToast(response.data);
     } catch (error) {
       console.error("Error fetching email:", error);
     }
@@ -279,12 +285,12 @@ function GamePage() {
             {/* Main Layout */}
             <div className="flex flex-grow">
                 {/* Sidebar */}
-                <aside className="step2 w-44 bg-blue-100 border-r border-blue-200 space-y-1 text-black">
+                <aside className="w-44 bg-blue-100 border-r border-blue-200 space-y-1 text-black">
                     {sidebarItems.map((item, index) => (
                     <div
                         key={index}
-                        className="flex items-center w-full px-2 py-2 hover:bg-blue-200 rounded cursor-pointer"
-                    >
+                        className={`flex items-center w-full px-2 py-2 rounded cursor-pointer hover:bg-blue-200 
+                          ${item.label === "Inbox" ? "bg-blue-200" : ""}`}>
                         <span className="truncate w-3/4">{item.label}</span>
                         <span className="text-sm text-blue-700 text-right w-1/4">{item.count > 0 ? item.count : ''}</span>
                     </div>
@@ -292,7 +298,7 @@ function GamePage() {
                 </aside>
 
                 {/* Message List */}
-                <div className="w-[calc(20vw)] h-[calc(85vh)] bg-blue-50 border-r border-blue-200 overflow-y-auto">
+                <div className="step2 w-[calc(20vw)] h-[calc(85vh)] bg-blue-50 border-r border-blue-200 overflow-y-auto">
                   {emails.map((email, index) => (
                     <EmailBlock
                       isDisabled = {disabled}
