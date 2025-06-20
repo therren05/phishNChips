@@ -72,7 +72,7 @@ async function readAllCsvEmails(): Promise<emailFormat[]> {
                         emails.push({
                             sender: row.sender ?? 'No Sender',
                             recipient: row.receiver ?? 'No Recipient',
-                            timestamp: row.date ?? 'No Timestamp',
+                            timestamp: row.date ? sanitizeDate(row.date) : '',
                             subject: row.subject ?? 'No Subject',
                             body: row.body ?? 'No body',
                             urlLinks: row.urls === '1' || row.urls === 1 ? true : false,
@@ -86,4 +86,14 @@ async function readAllCsvEmails(): Promise<emailFormat[]> {
     }
 
     return emails;
+}
+
+function sanitizeDate(dateString: string): string {
+    let sanitizedString = "";
+    let stringArray: string[] = dateString.split(' ');
+    if (stringArray.length < 4) {
+        return dateString; // Return original if not enough parts
+    }
+    sanitizedString += stringArray[0] + " "+ stringArray[1] + " " + stringArray[2] + " "+ stringArray[3];
+    return sanitizedString;
 }

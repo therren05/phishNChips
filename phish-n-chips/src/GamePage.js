@@ -38,6 +38,7 @@ function GamePage() {
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = (nickname) => {
+    //console.log("CLOSE MODAL");
     handleSubmit(nickname);
     setModalOpen(false);
   }
@@ -86,7 +87,7 @@ function GamePage() {
     const interval = setInterval(() => {
       setTimeLeft(prev => prev - 1);
       //rng for grabbing email
-       if (Math.random() < 0.9) 
+       if (Math.random() < 0.2) 
         fetchEmails();
       
     }, 1000);
@@ -107,6 +108,7 @@ function GamePage() {
   // call server on load
   useEffect(() => {
     fetchLeaderboard();
+    fetchEmails();
     window.scrollTo({top: 0, behavior: "auto"});
     if(!cookies.tourCompleted)
        startTour();
@@ -115,10 +117,10 @@ function GamePage() {
   }, []);
   
   const sidebarItems = [
-    { label: "Inbox", count: 4 },
+    { label: "Inbox", count: 427 },
     { label: "Sent", count: 0 },
-    { label: "Drafts", count: 2 },
-    { label: "Spam", count: 1 },
+    { label: "Drafts", count: 26 },
+    { label: "Spam", count: 3 },
     { label: "Trash", count: 0 },
   ];
 
@@ -238,8 +240,7 @@ function GamePage() {
                 </div>
             </div>
             <div className="rounded-full w-10 h-10 bg-blue-300 mr-3" />
-            <FaUser size={20} color="blue" />
-
+    
             </div>
             
 
@@ -286,7 +287,7 @@ function GamePage() {
                 <section className="step3 flex-grow bg-blue-50 relative">
                 {currentEmail &&
                 (<EmailReadingBlock 
-                    subject={currentEmail.subject ? currentEmail.subject : "NO SUBJECT"}
+                    subject={currentEmail.subject}
                     senderName={currentEmail.senderName}
                     senderImageUrl={`https://robohash.org/${Math.floor(Math.random() * 1000)}`} // Random number 0–999
                     recipient={currentEmail.recipient}
