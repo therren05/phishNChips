@@ -80,7 +80,7 @@ function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
         >
-          Collin Feaman 
+          Colin Feaman 
         </motion.p>
         <motion.p
           className="text"
@@ -110,7 +110,7 @@ function HomePage() {
           viewport={{ once: true }}
         >
           <h2 className="white-box-heading">What is Phish-n-Chips?</h2>
-          <p>
+          <p className="text-lg">
           Being aware of and trained to recognize phishing attacks is essential in defending against modern cyber threats, particularly from sophisticated groups like Scattered Spider. This hacking group is known for using advanced social engineering and phishing tactics to infiltrate high-value targets, including insurance companies. Scattered Spider often impersonates IT staff or executives to trick employees into handing over login credentials or approving access requests. Once inside, they can move laterally across systems, steal sensitive data, or deploy ransomware. Insurance companies are especially attractive targets due to the vast amount of personal and financial data they hold. Without proper phishing awareness training, employees may unknowingly open the door to these attacks. Regular training helps staff recognize red flags, avoid falling for impersonation attempts, and respond quickly to suspicious activity—making it a crucial line of defense against threat actors like Scattered Spider.
           </p>
         </motion.div>
@@ -124,6 +124,7 @@ function HomePage() {
       </div>
 
       <footer className="footer">
+      
         <div
           className={`stickyButtonWrapper ml-auto mr-auto flex ${isInView ? "show" : ""}`}
           ref={buttonRef}
@@ -134,6 +135,9 @@ function HomePage() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
+            <div className="text-[#ED1D24] justify-center flex font-semibold mb-4 text-2xl">
+              <h2>Enter Your Alias Below To Begin</h2>
+            </div>
             <div className="input-wrapper">
               <input
                 type="text"
@@ -150,7 +154,7 @@ function HomePage() {
             </div>
 
             <Button
-              className="button ml-auto mr-auto flex"
+              className="button ml-auto mr-auto flex mb-[calc(50%)]"
               onClick={() => {
                 if (!userInput.trim()) {
                   setError("Please enter your alias.");

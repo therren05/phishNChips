@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//sets the path to /admin
+// sets the path to /admin
 @RequestMapping("/admin")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AdminController {
@@ -20,21 +20,22 @@ public class AdminController {
     @Autowired
     private ScoreSO scoreSO;
 
-    //sets the path to /admin/getAllUsers and returns all user information
+    // sets the path to /admin/getAllUsers and returns all user information
     @GetMapping("/getAllUsers")
     @CrossOrigin(origins = "http://localhost:3000")
     public List<UserTO> displayUsers() {
         return userSO.getUsers();
     }
 
-    //sets the path to /admin/getUserByUsername/ and revieves a specific user by the given username
+    // sets the path to /admin/getUserByUsername/ and revieves a specific user by
+    // the given username
     @GetMapping("/getUserByUsername/{username}")
     @CrossOrigin(origins = "http://localhost:3000")
     public UserTO getUserByUsername(@PathVariable String username) {
         return userSO.getUserByUsername(username);
     }
 
-    //sets the path to /admin/deleteUserByUsername and deletes a specific user
+    // sets the path to /admin/deleteUserByUsername and deletes a specific user
     @GetMapping("/deleteUserByUsername/{username}")
     @CrossOrigin(origins = "http://localhost:3000")
     public String deleteUserByUsername(@PathVariable String username) {
@@ -42,7 +43,7 @@ public class AdminController {
         return "User with username " + username + " deleted.";
     }
 
-    //sets the path to /score/viewLogs and retrieves the normal logs for all users
+    // sets the path to /score/viewLogs and retrieves the normal logs for all users
     @GetMapping("/viewLogs")
     @CrossOrigin(origins = "http://localhost:3000")
     public List<ScoreTO> getData() {
@@ -54,4 +55,11 @@ public class AdminController {
     public List<ScoreTO> getDailyData() {
         return scoreSO.getWeeklyData();
     }
-} 
+
+    @PostMapping("/addLog")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<String> addScoreLog(@RequestBody ScoreTO data) {
+        scoreSO.addScoreLog(data);
+        return ResponseEntity.ok("Data log inserted successfully");
+    }
+}

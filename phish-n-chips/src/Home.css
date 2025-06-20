@@ -47,7 +47,7 @@
   border-radius: 20px;
   padding: 2rem;
   max-width: 800px;
-  margin: 4rem auto; /* center horizontally, add top/bottom space */
+  /* margin: 4rem auto; center horizontally, add top/bottom space */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* optional shadow for depth */
   text-align: left;
 }

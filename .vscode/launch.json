@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-JavaApplication<Java>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "PhishNChips.JavaApplication",
+            "projectName": "Java",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
