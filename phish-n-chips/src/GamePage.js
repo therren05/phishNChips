@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from './App.css';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useLocation } from 'react-router-dom';
@@ -11,13 +12,9 @@ import EmailReadingBlock from "./components/EmailReadingBlock.js";
 
 function GamePage() {
   const [page, setPage] = useState(0);
-  const leaderboardData = Array.from({ length: 200 }, (_, i) => ({
-    name: `User ${i + 1}`,
-    score: Math.floor(Math.random() * 1000),
-    rank: i + 1,
-  }));
   const visibleData = leaderboardData.slice(page * 20, (page + 1) * 20);
   const [selectedBoard, setSelectedBoard] = useState("all");
+  const [leaderboardData, setLeaderBoardData] = useState([]);
 
   const sidebarItems = [
     { label: "Inbox", count: 4 },
@@ -26,6 +23,29 @@ function GamePage() {
     { label: "Spam", count: 1 },
     { label: "Trash", count: 0 },
   ];
+
+  //server call
+  const fetchLogs = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/admin/viewLogs", {
+        auth: {
+          username: "admin",
+          password: "pass123!",
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setLeaderBoardData(response.data);
+    } catch (error) {
+      console.error("Error fetching logs:", error);
+    }
+  };
+
+  //call server on load
+  useEffect(() => {
+    fetchLogs();
+  }, []);
 
   const location = useLocation();
   const userInput = location.state?.userInput || ''; //user inputed alias variable
@@ -128,7 +148,7 @@ function GamePage() {
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
             <button
-              onClick={() => setSelectedBoard("all")}
+              onClick={() => {setSelectedBoard("all"); fetchLogs()}}
               style={{
                 backgroundColor: selectedBoard === "all" ? "#cccccc" : "#ffffff",
                 color: "#000",
@@ -142,7 +162,7 @@ function GamePage() {
             </button>
 
             <button
-              onClick={() => setSelectedBoard("weekly")}
+              onClick={() => {setSelectedBoard("weekly"); fetchLogs()}}
               style={{
                 backgroundColor: selectedBoard === "weekly" ? "#cccccc" : "#ffffff",
                 color: "#000",
@@ -170,7 +190,7 @@ function GamePage() {
               {visibleData.map((entry) => (
                 <tr key={entry.rank} className="even:bg-red-50 hover:bg-red-100 cursor-pointer">
                   <td className="py-2 px-4 border-t border-red-100">{entry.rank}</td>
-                  <td className="py-2 px-4 border-t border-red-100">{entry.name}</td>
+                  <td className="py-2 px-4 border-t border-red-100">{entry.username}</td>
                   <td className="py-2 px-4 border-t border-red-100">{entry.score}</td>
                 </tr>
               ))}
